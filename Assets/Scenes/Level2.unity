@@ -1723,6 +1723,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3084870894337338342, guid: 46c7798219452164f81c3dd60f2b5bd2, type: 3}
+      propertyPath: isLocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3084870894337338342, guid: 46c7798219452164f81c3dd60f2b5bd2, type: 3}
       propertyPath: nextSeceneName
       value: Level3
       objectReference: {fileID: 0}
