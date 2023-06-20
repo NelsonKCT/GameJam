@@ -7,6 +7,7 @@ TagManager:
   - Trigger
   - Platform
   - Conveyor
+  - OneWayDoor
   layers:
   - Default
   - TransparentFX

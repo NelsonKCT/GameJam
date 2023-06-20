@@ -5,11 +5,13 @@ using UnityEngine;
 public class Lever : MonoBehaviour
 {
     [SerializeField] private List<GameObject> doorList = new List<GameObject>();
+    [SerializeField] private List<Sprite> leverSpriteList = new List<Sprite>();
     private bool isTriggered;
 
     private void Start()
     {
         isTriggered = false;
+        transform.gameObject.GetComponent<SpriteRenderer>().sprite = leverSpriteList[0];
     }
     private void Update()
     {
@@ -18,7 +20,6 @@ public class Lever : MonoBehaviour
             Debug.Log("test");
             foreach (GameObject door in doorList)
             {
-                
                 door.SendMessage("OpenDoor");
             }
         }
@@ -27,8 +28,8 @@ public class Lever : MonoBehaviour
     {
         if (other.CompareTag("Trigger"))
         {
-            Debug.Log("test1");
             isTriggered = true;
+            transform.gameObject.GetComponent<SpriteRenderer>().sprite = leverSpriteList[1];
         }
     }
 }
