@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         isMoveFinished = true;
         isEnterPressed = false;
         moveForwardFinished = true;
-        isGrounded = false;
+        isGrounded = true;
         isUpBlocked = false;
         isLeftBlocked = false;
         isRightBlocked = false;
@@ -75,6 +75,11 @@ public class PlayerMovement : MonoBehaviour
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
                 }
+            }
+
+            if(!isGrounded)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
             }
         }
 
@@ -212,6 +217,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+        //Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
     }
 }
