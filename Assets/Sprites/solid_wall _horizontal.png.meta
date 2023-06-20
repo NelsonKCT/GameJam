@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b1a58105d9ab7e64ca083075ac39dad9
+guid: fa6e262f9d099b94fa483c5ddca1739c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background-Sheet_0
+      name: solid_wall _horizontal_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,29 +119,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ed56609b946a684187eebbb7fe6840e
-      internalID: 918758916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: background-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 42e912b36e386f541b85a259f5b25657
-      internalID: 564961568
+      spriteID: d1a8b207ef04b7c40bd06598729a4ed6
+      internalID: -1241626680
       vertices: []
       indices: 
       edges: []
@@ -157,8 +136,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      background-Sheet_0: 918758916
-      background-Sheet_1: 564961568
+      solid_wall _horizontal_0: -1241626680
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
