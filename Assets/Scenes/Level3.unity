@@ -1903,6 +1903,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1357686111}
     m_Modifications:
+    - target: {fileID: 3554523367356696353, guid: 61141026886c2c04f92de9b5a0dd5ca6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3554523369051871106, guid: 61141026886c2c04f92de9b5a0dd5ca6, type: 3}
       propertyPath: m_Name
       value: OneWayDoor
@@ -1950,6 +1954,10 @@ PrefabInstance:
     - target: {fileID: 3554523369051871108, guid: 61141026886c2c04f92de9b5a0dd5ca6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554523369059059975, guid: 61141026886c2c04f92de9b5a0dd5ca6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61141026886c2c04f92de9b5a0dd5ca6, type: 3}

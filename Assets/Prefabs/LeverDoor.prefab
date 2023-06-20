@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 3554523369051871107}
   - component: {fileID: 3554523369051871109}
   m_Layer: 7
-  m_Name: OneWayDoor
+  m_Name: LeverDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

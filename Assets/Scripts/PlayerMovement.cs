@@ -11,10 +11,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isEnterPressed;
     private bool moveForwardFinished;
 
-    private Queue playerInputQueue = new Queue();
+    public Queue playerInputQueue = new Queue();
     private Stack playerBackwardStack = new Stack();
     private int playerInputCount = 0;
     private int playerBackwardCount = 0;
+    public string playerCurInput;
 
     private Transform groundCheck;
     private Transform upCheck;
@@ -116,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerMoveForward()
     {
         string input = (string)playerInputQueue.Dequeue();
+        playerCurInput = input;
         playerInputCount--;
 
         if (input == "Trigger")
