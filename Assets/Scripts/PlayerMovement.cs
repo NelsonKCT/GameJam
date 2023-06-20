@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform upCheck;
     private Transform leftCheck;
     private Transform rightCheck;
+    private Transform trigger;
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
@@ -44,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         upCheck = transform.Find("UpCheck");
         leftCheck = transform.Find("LeftCheck");
         rightCheck = transform.Find("RightCheck");
+        trigger = transform.Find("Trigger");
+        trigger.gameObject.SetActive(false);
     }
     void Update()
     {
@@ -60,10 +63,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     PlayerMoveForward();
                 }
-                else
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                }
             }
             if (playerBackwardCount > 0 && moveForwardFinished)
             {
@@ -71,13 +70,9 @@ public class PlayerMovement : MonoBehaviour
                 {
                     PlayerMoveBackward();
                 }
-                else
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                }
             }
 
-            if(!isGrounded)
+            if (!isGrounded)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
             }
@@ -103,6 +98,11 @@ public class PlayerMovement : MonoBehaviour
             playerInputQueue.Enqueue("Up");
             playerInputCount++;
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerInputQueue.Enqueue("Trigger");
+            playerInputCount++;
+        }
         if (Input.GetKeyDown(KeyCode.Return) && isMoveFinished)
         {
             isEnterPressed = true;
@@ -116,7 +116,13 @@ public class PlayerMovement : MonoBehaviour
         string input = (string)playerInputQueue.Dequeue();
         playerInputCount--;
 
-        if (input == "Right")
+        if (input == "Trigger")
+        {
+            StartCoroutine(SetTrigger());
+            playerBackwardStack.Push("Trigger");
+            playerBackwardCount++;
+        }
+        else if (input == "Right")
         {
             if (!isRightBlocked)
             {
@@ -150,11 +156,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerMoveBackward()
     {
+
         Debug.Log("MoveBack");
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
-        if (input == "Left")
+        if (input == "Trigger")
+        {
+            StartCoroutine(SetTrigger());
+        }
+        else if (input == "Left")
         {
             if (!isLeftBlocked)
             {
@@ -174,6 +185,13 @@ public class PlayerMovement : MonoBehaviour
             isMoveFinished = true;
 
         }
+    }
+
+    IEnumerator SetTrigger()
+    {
+        trigger.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        trigger.gameObject.SetActive(false);
     }
 
     private void CheckGround()
