@@ -16,12 +16,34 @@ public class PlayerMovement : MonoBehaviour
     private int playerInputCount = 0;
     private int playerBackwardCount = 0;
 
+    private Transform groundCheck;
+    private Transform upCheck;
+    private Transform leftCheck;
+    private Transform rightCheck;
+    [SerializeField] private Vector2 groundCheckSize;
+    [SerializeField] private LayerMask groundLayer;
+    private bool isGrounded;
+    private bool isUpBlocked;
+    private bool isLeftBlocked;
+    private bool isRightBlocked;
+
+    private List<Sprite> playerInputList = new List<Sprite>();
+
     void Start()
     {
         playerInputCount = 0;
         isMoveFinished = true;
         isEnterPressed = false;
         moveForwardFinished = true;
+        isGrounded = false;
+        isUpBlocked = false;
+        isLeftBlocked = false;
+        isRightBlocked = false;
+
+        groundCheck = transform.Find("GroundCheck");
+        upCheck = transform.Find("UpCheck");
+        leftCheck = transform.Find("LeftCheck");
+        rightCheck = transform.Find("RightCheck");
     }
     void Update()
     {
@@ -34,17 +56,41 @@ public class PlayerMovement : MonoBehaviour
 
             if (playerInputCount > 0 && isEnterPressed)
             {
-                PlayerMoveForward();
+                if (isGrounded)
+                {
+                    PlayerMoveForward();
+                }
+                else
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+                }
             }
             if (playerBackwardCount > 0 && moveForwardFinished)
             {
-                PlayerMoveBackward();
+                if (isGrounded)
+                {
+                    PlayerMoveBackward();
+                }
+                else
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+                }
             }
         }
 
+        if (isMoveFinished)
+        {
+            PlayerInput();
+        }
+
+        CheckGround();
+    }
+
+    private void PlayerInput()
+    {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            playerInputQueue.Enqueue("Left");
+            playerInputQueue.Enqueue("Right");
             playerInputCount++;
         }
         if (Input.GetKeyDown(KeyCode.W))
@@ -62,19 +108,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerMoveForward()
     {
-        Debug.Log("Move");
         string input = (string)playerInputQueue.Dequeue();
         playerInputCount--;
 
-        if (input == "Left")
+        if (input == "Right")
         {
-            transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
-            playerBackwardStack.Push("Right");
+            if (!isRightBlocked)
+            {
+                transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
+            }
+            playerBackwardStack.Push("Left");
             playerBackwardCount++;
         }
         else if (input == "Up")
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
+            if (!isUpBlocked)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
+            }
             playerBackwardStack.Push("Down");
             playerBackwardCount++;
         }
@@ -98,13 +149,19 @@ public class PlayerMovement : MonoBehaviour
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
-        if (input == "Right")
+        if (input == "Left")
         {
-            transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
+            if (!isLeftBlocked)
+            {
+                transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
+            }
         }
         else if (input == "Down")
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+            if (!isGrounded)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+            }
         }
 
         if (playerBackwardCount == 0)
@@ -112,5 +169,49 @@ public class PlayerMovement : MonoBehaviour
             isMoveFinished = true;
 
         }
+    }
+
+    private void CheckGround()
+    {
+        if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        if (Physics2D.OverlapBox(upCheck.position, groundCheckSize, 0f, groundLayer))
+        {
+            isUpBlocked = true;
+        }
+        else
+        {
+            isUpBlocked = false;
+        }
+
+        if (Physics2D.OverlapBox(leftCheck.position, groundCheckSize, 0f, groundLayer))
+        {
+            isLeftBlocked = true;
+        }
+        else
+        {
+            isLeftBlocked = false;
+        }
+
+        if (Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer))
+        {
+            isRightBlocked = true;
+        }
+        else
+        {
+            isRightBlocked = false;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
     }
 }
