@@ -20,9 +20,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform upCheck;
     private Transform leftCheck;
     private Transform rightCheck;
+    private Transform trigger;
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
+    private bool isDownBlocked;
     private bool isUpBlocked;
     private bool isLeftBlocked;
     private bool isRightBlocked;
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         isEnterPressed = false;
         moveForwardFinished = true;
         isGrounded = true;
+        isDownBlocked = false;
         isUpBlocked = false;
         isLeftBlocked = false;
         isRightBlocked = false;
@@ -44,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         upCheck = transform.Find("UpCheck");
         leftCheck = transform.Find("LeftCheck");
         rightCheck = transform.Find("RightCheck");
+        trigger = transform.Find("Trigger");
+        trigger.gameObject.SetActive(false);
     }
     void Update()
     {
@@ -60,10 +65,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     PlayerMoveForward();
                 }
-                else
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                }
             }
             if (playerBackwardCount > 0 && moveForwardFinished)
             {
@@ -71,13 +72,9 @@ public class PlayerMovement : MonoBehaviour
                 {
                     PlayerMoveBackward();
                 }
-                else
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                }
             }
 
-            if(!isGrounded)
+            if (!isGrounded)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
             }
@@ -103,6 +100,11 @@ public class PlayerMovement : MonoBehaviour
             playerInputQueue.Enqueue("Up");
             playerInputCount++;
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerInputQueue.Enqueue("Trigger");
+            playerInputCount++;
+        }
         if (Input.GetKeyDown(KeyCode.Return) && isMoveFinished)
         {
             isEnterPressed = true;
@@ -116,7 +118,13 @@ public class PlayerMovement : MonoBehaviour
         string input = (string)playerInputQueue.Dequeue();
         playerInputCount--;
 
-        if (input == "Right")
+        if (input == "Trigger")
+        {
+            StartCoroutine(SetTrigger());
+            playerBackwardStack.Push("Trigger");
+            playerBackwardCount++;
+        }
+        else if (input == "Right")
         {
             if (!isRightBlocked)
             {
@@ -150,11 +158,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerMoveBackward()
     {
+
         Debug.Log("MoveBack");
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
-        if (input == "Left")
+        if (input == "Trigger")
+        {
+            StartCoroutine(SetTrigger());
+        }
+        else if (input == "Left")
         {
             if (!isLeftBlocked)
             {
@@ -163,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Down")
         {
-            if (!isGrounded)
+            if (!isGrounded || !isDownBlocked)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
             }
@@ -176,10 +189,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    IEnumerator SetTrigger()
+    {
+        trigger.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        trigger.gameObject.SetActive(false);
+    }
+
     private void CheckGround()
     {
         if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer))
         {
+            Collider2D collider = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer);
+            if (collider.CompareTag("Platform"))
+            {
+                isDownBlocked = false;
+            }
+            else
+            {
+                isDownBlocked = true;
+            }
             isGrounded = true;
         }
         else
@@ -189,7 +218,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics2D.OverlapBox(upCheck.position, groundCheckSize, 0f, groundLayer))
         {
-            isUpBlocked = true;
+            Collider2D collider = Physics2D.OverlapBox(upCheck.position, groundCheckSize, 0f, groundLayer);
+            if (collider.CompareTag("Platform"))
+            {
+                isUpBlocked = false;
+            }
+            else
+            {
+                isUpBlocked = true;
+            }
         }
         else
         {
