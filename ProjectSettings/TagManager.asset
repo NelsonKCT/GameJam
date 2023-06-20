@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Trigger
   - Platform
+  - Conveyor
   layers:
   - Default
   - TransparentFX
