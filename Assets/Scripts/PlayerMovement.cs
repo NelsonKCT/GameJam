@@ -24,11 +24,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform trigger;
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask groundLayer;
-    private bool isGrounded;
-    private bool isDownBlocked;
-    private bool isUpBlocked;
-    private bool isLeftBlocked;
-    private bool isRightBlocked;
+    public bool isGrounded;
+    public bool isDownBlocked;
+    public bool isUpBlocked;
+    public bool isLeftBlocked;
+    public bool isRightBlocked;
     public bool canWalkThrough;
 
     private List<Sprite> playerInputList = new List<Sprite>();
