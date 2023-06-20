@@ -25,6 +25,7 @@ public class Portal : MonoBehaviour
     {
         if (isLocked)
         {
+            Debug.Log("test");
             isLocked = false;
         }
     }

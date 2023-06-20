@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask groundLayer;
     private bool isGrounded;
+    private bool isDownBlocked;
     private bool isUpBlocked;
     private bool isLeftBlocked;
     private bool isRightBlocked;
@@ -37,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         isEnterPressed = false;
         moveForwardFinished = true;
         isGrounded = true;
+        isDownBlocked = false;
         isUpBlocked = false;
         isLeftBlocked = false;
         isRightBlocked = false;
@@ -174,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Down")
         {
-            if (!isGrounded)
+            if (!isGrounded || !isDownBlocked)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
             }
@@ -198,6 +200,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer))
         {
+            Collider2D collider = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer);
+            if (collider.CompareTag("Platform"))
+            {
+                isDownBlocked = false;
+            }
+            else
+            {
+                isDownBlocked = true;
+            }
             isGrounded = true;
         }
         else
@@ -207,7 +218,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics2D.OverlapBox(upCheck.position, groundCheckSize, 0f, groundLayer))
         {
-            isUpBlocked = true;
+            Collider2D collider = Physics2D.OverlapBox(upCheck.position, groundCheckSize, 0f, groundLayer);
+            if (collider.CompareTag("Platform"))
+            {
+                isUpBlocked = false;
+            }
+            else
+            {
+                isUpBlocked = true;
+            }
         }
         else
         {

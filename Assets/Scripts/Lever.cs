@@ -15,8 +15,10 @@ public class Lever : MonoBehaviour
     {
         if (isTriggered)
         {
+            Debug.Log("test");
             foreach (GameObject door in doorList)
             {
+                
                 door.SendMessage("OpenDoor");
             }
         }
@@ -25,6 +27,7 @@ public class Lever : MonoBehaviour
     {
         if (other.CompareTag("Trigger"))
         {
+            Debug.Log("test1");
             isTriggered = true;
         }
     }
