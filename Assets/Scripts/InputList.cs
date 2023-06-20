@@ -18,7 +18,7 @@ public class InputList : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W)){
+        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyDown.Space)){
             Instantiate(input_obj, transform.position + new Vector3((1+input_n)*0.75f,0,0), transform.rotation);
             Instantiate(rvs_input_obj, transform.position + new Vector3((1+input_n)*0.75f,-0.75f,0), transform.rotation);
 
