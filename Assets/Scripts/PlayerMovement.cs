@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool movingForward;
     public bool movingBackward;
     public bool doDelete;
+    private Animator playerAnim;
 
     public Queue playerInputQueue = new Queue();
     public Stack playerBackwardStack = new Stack();
@@ -73,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         rightCheck = transform.Find("RightCheck");
         trigger = transform.Find("Trigger");
         trigger.gameObject.SetActive(false);
+        playerAnim = transform.gameObject.GetComponent<Animator>();
 
         rockOnLeft = false;
         rockOnRight = true;
@@ -82,6 +84,23 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Debug.Log(playerInputQueue.Count);
+
+        if (playerInputCount > 0 && !moveForwardFinished)
+        {
+            playerAnim.SetBool("PlayerMoveFoward", true);
+            playerAnim.SetBool("PlayerIdle", false);
+        }
+        else if (playerBackwardCount > 0 && moveForwardFinished)
+        {
+            playerAnim.SetBool("PlayerMoveBackward", true);
+            playerAnim.SetBool("PlayerIdle", false);
+        }
+        else
+        {
+            playerAnim.SetBool("PlayerMoveFoward", false);
+            playerAnim.SetBool("PlayerMoveBackward", false);
+            playerAnim.SetBool("PlayerIdle", true);
+        }
 
         moveTimeCount -= Time.deltaTime;
         if (moveTimeCount < 0)

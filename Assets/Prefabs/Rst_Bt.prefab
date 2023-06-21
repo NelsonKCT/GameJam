@@ -223,7 +223,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1573438871535537058}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2793928431460590826}
+        m_TargetAssemblyTypeName: Reset, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2793928431460590826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613b45358f9e2734e845cb9e961a42e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: level1
+  sceneName: Level1
 --- !u!1 &1573438872024451861
 GameObject:
   m_ObjectHideFlags: 0
