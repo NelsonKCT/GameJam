@@ -24,7 +24,6 @@ public class InputList : MonoBehaviour
         input_n=0;
         list_index=0;
         startDelete=false;
-        Debug.Log(input_n);
     }
 
     // Update is called once per frame
@@ -50,6 +49,7 @@ public class InputList : MonoBehaviour
         else if(list_index==2*input_n-1){
             startDelete=false;
             list_index=0;
+            input_n=0;
         }
     }
 

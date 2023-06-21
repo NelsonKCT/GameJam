@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(playerInputQueue.Count);
+        // Debug.Log(playerInputQueue.Count);
 
         moveTimeCount -= Time.deltaTime;
         if (moveTimeCount < 0)
@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerMoveBackward()
     {
 
-        Debug.Log("MoveBack");
+        // Debug.Log("MoveBack");
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
