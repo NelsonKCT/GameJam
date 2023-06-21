@@ -41,7 +41,10 @@ public class PlayerMovement : MonoBehaviour
     public bool rockOnLeft;
     public bool rockOnRight;
 
+    public int remainReturn = 2;
+
     [SerializeField] private AudioSource reverseSoundEffect;
+
 
     void Start()
     {
@@ -123,10 +126,21 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return) && isMoveFinished)
         {
-            isEnterPressed = true;
-            isMoveFinished = false;
-            moveForwardFinished = false;
-            moveTimeCount = 0;
+
+            if(remainReturn <= 0)
+            {
+                Debug.LogWarning("No more backward");
+            }
+            else
+            {
+                remainReturn--;
+                isEnterPressed = true;
+                isMoveFinished = false;
+                moveForwardFinished = false;
+                moveTimeCount = 0;
+            }
+            
+
         }
     }
 
@@ -226,6 +240,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerBackwardCount == 0)
         {
+            doDelete=false;
             isMoveFinished = true;
 
         }
