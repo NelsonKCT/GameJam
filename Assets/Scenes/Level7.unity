@@ -2111,6 +2111,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8536307403963144584, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
+      propertyPath: remainReturn
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536307403963144584, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: reverseSoundEffect
       value: 
       objectReference: {fileID: 1278702166}
@@ -3050,7 +3054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1651190957938243174, guid: de682455528e27a41ad8bfea86ef68d4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8656523
+      value: -2.02
       objectReference: {fileID: 0}
     - target: {fileID: 1651190957938243174, guid: de682455528e27a41ad8bfea86ef68d4, type: 3}
       propertyPath: m_LocalPosition.z

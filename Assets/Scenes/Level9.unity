@@ -2048,6 +2048,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1255301411}
     - target: {fileID: 8536307403963144584, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
+      propertyPath: remainReturn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8536307403963144584, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: reverseSoundEffect
       value: 
       objectReference: {fileID: 1278702166}

@@ -38,13 +38,10 @@ public class InputList : MonoBehaviour
 
             input_n++;
         }
-        // else if(Input.GetKeyDown(KeyCode.Return)){
-        // }
-        Debug.Log(doDelete);
         if(doDelete){
             DeleteIcon();
         }
-        if(list_index==2*input_n-1){
+        if(list_index==-1 && !delRvs){
             list_index=0;
             input_n=0;
         }
@@ -52,34 +49,22 @@ public class InputList : MonoBehaviour
 
     public void DeleteIcon(){
             if(list_index<input_n && !delRvs){
-                // if(waitTime>0){
-                //     waitTime-=Time.deltaTime;
-                // }
-                // else{
-                //     Destroy(inputs[list_index]);
-                //     waitTime = 0.5f;
-                //     list_index++; 
-                // }
                 Destroy(inputs[list_index]);
                 list_index++; 
             }
             else if(list_index==input_n && !delRvs) {
                 list_index--;
                 delRvs=true;
+                Destroy(rvs_inputs[list_index]);
+                Debug.Log(list_index);
+                if(list_index==0) delRvs=false;
+                list_index--;
             }
             else if(list_index>=0 && delRvs){
                 Destroy(rvs_inputs[list_index]);
-                if(list_index==0) delRvs=false;
                 list_index--; 
-                // if(waitTime>0){
-                //     waitTime-=Time.deltaTime;
-                // }
-                // else{
-                //     Destroy(rvs_inputs[list_index-input_n]);
-                //     waitTime = 0.5f;
-                //     list_index++; 
-                // }
+                Debug.Log(list_index);
             }
-        PM.doDelete=false;
+            PM.doDelete=false;
     }
 }
