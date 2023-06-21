@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public bool doDelete;
 
     public Queue playerInputQueue = new Queue();
-    private Stack playerBackwardStack = new Stack();
+    public Stack playerBackwardStack = new Stack();
     private int playerInputCount = 0;
     private int playerBackwardCount = 0;
     public string playerCurInput;
@@ -216,6 +216,7 @@ public class PlayerMovement : MonoBehaviour
 
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
+        playerCurInput = input;
 
         if (input == "Trigger")
         {
@@ -252,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerBackwardCount == 0)
         {
-            doDelete = false;
+            //doDelete=false;
             isMoveFinished = true;
 
         }
