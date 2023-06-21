@@ -51,8 +51,8 @@ public class InputList : MonoBehaviour
 
     public void DeleteIcon(){
             if(list_index<input_n && !delRvs){
-                Destroy(inputs[list_index]);
-                inputs.Remove(inputs[list_index]);
+                Destroy(inputs[0]);
+                inputs.Remove(inputs[0]);
                 Debug.Log(list_index);
                 list_index++; 
             }
@@ -62,8 +62,8 @@ public class InputList : MonoBehaviour
                 list_index--;
             }
             else if(list_index>=0 && list_index<=input_n && delRvs){
-                Destroy(rvs_inputs[list_index]);
-                inputs.Remove(inputs[list_index]);
+                Destroy(rvs_inputs[0]);
+                rvs_inputs.Remove(rvs_inputs[0]);
                 list_index--;
             }
             PM.doDelete=false;

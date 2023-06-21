@@ -30,7 +30,7 @@ public class Conveyor : MonoBehaviour
             string input = (string)pM.playerInputQueue.Peek();
             if (pM.playerCurInput == input)
             {
-                //pM.playerInputQueue.Dequeue();
+                
             }
             else
             {
