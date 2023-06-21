@@ -250,7 +250,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &613738739
 GameObject:
@@ -2649,6 +2649,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8317213068589108186, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 25e481d6196f87c478551c6bd24123f2, type: 2}
     - target: {fileID: 8536307403963144584, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: remainReturn
       value: 2
@@ -2728,7 +2732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1573438871182365929, guid: 93c49ca2a9f9235419c262d72d898697, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1573438871182365929, guid: 93c49ca2a9f9235419c262d72d898697, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2805,10 +2809,6 @@ PrefabInstance:
     - target: {fileID: 1573438871182365941, guid: 93c49ca2a9f9235419c262d72d898697, type: 3}
       propertyPath: m_Name
       value: Rst_Bt
-      objectReference: {fileID: 0}
-    - target: {fileID: 2793928431460590826, guid: 93c49ca2a9f9235419c262d72d898697, type: 3}
-      propertyPath: sceneName
-      value: Level1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93c49ca2a9f9235419c262d72d898697, type: 3}
