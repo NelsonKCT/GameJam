@@ -135,17 +135,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 679864042, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
+      propertyPath: m_SleepingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 679864042, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8536307403963144587, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8536307403963144587, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -2.453
       objectReference: {fileID: 0}
     - target: {fileID: 8536307403963144587, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.385
       objectReference: {fileID: 0}
     - target: {fileID: 8536307403963144587, guid: 5d684a5598c24164ba289a722b1c47f6, type: 3}
       propertyPath: m_LocalPosition.z
