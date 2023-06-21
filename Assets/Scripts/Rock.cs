@@ -43,7 +43,7 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning("rock script runing");
+        Debug.LogWarning("rock script running");
         CheckGround();
     }
 
