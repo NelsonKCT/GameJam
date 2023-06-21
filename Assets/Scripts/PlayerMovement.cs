@@ -237,6 +237,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerBackwardCount == 0)
         {
+            doDelete=false;
             isMoveFinished = true;
 
         }
