@@ -28,7 +28,6 @@ public class InputList : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        doDelete=PM.doDelete;
         if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)){
             new_input =Instantiate(input_obj, transform.position + new Vector3((-input_n)*0.75f,0,0), transform.rotation);
             inputs.Add(new_input);
@@ -38,32 +37,34 @@ public class InputList : MonoBehaviour
 
             input_n++;
         }
-        if(doDelete){
+        if(PM.doDelete){
             DeleteIcon();
         }
-        if(list_index==-1 && !delRvs){
-            list_index=0;
+        if(list_index==-1 && delRvs){
             input_n=0;
+            list_index=0;
+            PM.doDelete=false;
+            delRvs=false;
+            Debug.Log("Rst");
         }
     }
 
     public void DeleteIcon(){
             if(list_index<input_n && !delRvs){
-                Destroy(inputs[list_index]);
+                Destroy(inputs[0]);
+                inputs.Remove(inputs[0]);
+                Debug.Log(list_index);
                 list_index++; 
             }
-            else if(list_index==input_n && !delRvs) {
-                list_index--;
+            if(list_index==input_n && !delRvs) {
                 delRvs=true;
-                Destroy(rvs_inputs[list_index]);
-                Debug.Log(list_index);
-                if(list_index==0) delRvs=false;
+                Debug.Log("Fix");
                 list_index--;
             }
-            else if(list_index>=0 && delRvs){
-                Destroy(rvs_inputs[list_index]);
-                list_index--; 
-                Debug.Log(list_index);
+            else if(list_index>=0 && list_index<=input_n && delRvs){
+                Destroy(rvs_inputs[0]);
+                rvs_inputs.Remove(rvs_inputs[0]);
+                list_index--;
             }
             PM.doDelete=false;
     }

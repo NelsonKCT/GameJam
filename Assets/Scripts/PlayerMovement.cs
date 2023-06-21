@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool doDelete;
 
     public Queue playerInputQueue = new Queue();
-    private Stack playerBackwardStack = new Stack();
+    public Stack playerBackwardStack = new Stack();
     private int playerInputCount = 0;
     private int playerBackwardCount = 0;
     public string playerCurInput;
@@ -33,7 +33,12 @@ public class PlayerMovement : MonoBehaviour
     public bool isUpBlocked;
     public bool isLeftBlocked;
     public bool isRightBlocked;
-    public bool canWalkThrough;
+    public bool isOneWayDoor;
+    private bool canDownGoThrough;
+    private bool canUpGoThrough;
+    private bool canLeftGoThrough;
+    private bool canRightGoThrough;
+
 
     private List<Sprite> playerInputList = new List<Sprite>();
 
@@ -127,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) && isMoveFinished)
         {
 
-            if(remainReturn <= 0)
+            if (remainReturn <= 0)
             {
                 Debug.LogWarning("No more backward");
             }
@@ -139,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
                 moveForwardFinished = false;
                 moveTimeCount = 0;
             }
-            
+
 
         }
     }
@@ -160,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         else if (input == "Right")
         {
             doDelete = true;
-            if (!isRightBlocked || canWalkThrough)
+            if (!isRightBlocked || (isOneWayDoor && canRightGoThrough))
             {
                 transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
                 if (rockOnRight)
@@ -175,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
         else if (input == "Up")
         {
             doDelete = true;
-            if (!isUpBlocked || canWalkThrough)
+            if (!isUpBlocked || (isOneWayDoor && canUpGoThrough))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
             }
@@ -204,6 +209,7 @@ public class PlayerMovement : MonoBehaviour
 
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
+        playerCurInput = input;
 
         if (input == "Trigger")
         {
@@ -213,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
         else if (input == "Left")
         {
             doDelete = true;
-            if (!isLeftBlocked || canWalkThrough)
+            if (!isLeftBlocked || (isOneWayDoor && canLeftGoThrough))
             {
                 transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
 
@@ -232,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
         else if (input == "Down")
         {
             doDelete = true;
-            if (!isGrounded || !isDownBlocked || canWalkThrough)
+            if (!isGrounded || !isDownBlocked || (isOneWayDoor && canDownGoThrough))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
             }
@@ -240,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerBackwardCount == 0)
         {
-            doDelete=false;
+            //doDelete=false;
             isMoveFinished = true;
 
         }
@@ -262,14 +268,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 isDownBlocked = false;
             }
+            else if (collider.CompareTag("OneWayDoor") && isOneWayDoor)
+            {
+                canDownGoThrough = true;
+                isDownBlocked = false;
+            }
             else
             {
+                canDownGoThrough = false;
                 isDownBlocked = true;
             }
             isGrounded = true;
         }
         else
         {
+            canDownGoThrough = false;
             isGrounded = false;
         }
 
@@ -280,13 +293,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 isUpBlocked = false;
             }
+            else if (collider.CompareTag("OneWayDoor") && isOneWayDoor)
+            {
+                canUpGoThrough = true;
+                isUpBlocked = false;
+            }
             else
             {
+                canUpGoThrough = false;
                 isUpBlocked = true;
             }
         }
         else
         {
+            canDownGoThrough = false;
             isUpBlocked = false;
         }
 
@@ -308,16 +328,26 @@ public class PlayerMovement : MonoBehaviour
                 }
                 isLeftBlocked = false;
             }
+            else if (collider.CompareTag("Platform"))
+            {
+                isLeftBlocked = false;
+            }
+            else if (collider.CompareTag("OneWayDoor") && isOneWayDoor)
+            {
+                canLeftGoThrough = true;
+                isLeftBlocked = false;
+            }
             else
             {
-
                 rockOnLeft = false;
+                canLeftGoThrough = false;
                 isLeftBlocked = true;
             }
         }
         else
         {
             rockOnLeft = false;
+            canDownGoThrough = false;
             isLeftBlocked = false;
         }
 
@@ -337,40 +367,55 @@ public class PlayerMovement : MonoBehaviour
                     isRightBlocked = false;
                 }
             }
+            else if (collider.CompareTag("Platform"))
+            {
+                isRightBlocked = false;
+            }
+            else if (collider.CompareTag("OneWayDoor") && isOneWayDoor)
+            {
+                canRightGoThrough = true;
+                isRightBlocked = false;
+            }
             else
             {
                 rockOnRight = false;
+                canRightGoThrough = false;
                 isRightBlocked = true;
             }
         }
         else
         {
             rockOnRight = false;
+            canDownGoThrough = false;
             isRightBlocked = false;
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("OneWayDoor"))
-        {
-            StartCoroutine(OneWayDoor());
-        }
-    }
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        if (other.CompareTag("DoorPos"))
+        {
+            isOneWayDoor = true;
+        }
     }
 
-    IEnumerator OneWayDoor()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        canWalkThrough = true;
-        yield return new WaitForSeconds(0.8f);
-        canWalkThrough = false;
+        if (other.CompareTag("DoorPos"))
+        {
+            isOneWayDoor = false;
+        }
     }
+
+    // IEnumerator OneWayDoor()
+    // {
+    //     isOneWayDoor = true;
+    //     yield return new WaitForSeconds(0.5f);
+    //     isOneWayDoor = false;
+    // }
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+        //Gizmos.DrawWireCube(leftCheck.position, groundCheckSize);
     }
 }
