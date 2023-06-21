@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InputPresent : MonoBehaviour
 {
-    private Sprite[] sp;
-    private SpriteRenderer spR;
+    public Sprite[] sp;
+    public SpriteRenderer spR;
     private bool showed;
     // Start is called before the first frame update
     void Start()
@@ -13,12 +13,6 @@ public class InputPresent : MonoBehaviour
         sp = Resources.LoadAll<Sprite>("move-Sheet");
         spR = gameObject.GetComponent<SpriteRenderer>();
         showed = false;
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         if(Input.GetKeyDown(KeyCode.D) && !showed){
             spR.sprite = sp[0];
             showed=true;
@@ -28,5 +22,10 @@ public class InputPresent : MonoBehaviour
             showed=true;
         }
         
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
     }
 }
