@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float movePos = 1f;
-    private float moveTimeCount;
+    private float moveTimeCount=0;
     private float moveTime = 0.5f;
-    private bool isMoveFinished;
-    private bool isEnterPressed;
-    private bool moveForwardFinished;
+    public bool isMoveFinished;
+    public bool isEnterPressed;
+    public bool moveForwardFinished;
+    public bool movingForward;
+    public bool movingBackward;
+    public bool delayDeleteIcon=false;
 
     public Queue playerInputQueue = new Queue();
     private Stack playerBackwardStack = new Stack();
@@ -24,11 +27,11 @@ public class PlayerMovement : MonoBehaviour
     private Transform trigger;
     [SerializeField] private Vector2 groundCheckSize;
     [SerializeField] private LayerMask groundLayer;
-    private bool isGrounded;
-    private bool isDownBlocked;
-    private bool isUpBlocked;
-    private bool isLeftBlocked;
-    private bool isRightBlocked;
+    public bool isGrounded;
+    public bool isDownBlocked;
+    public bool isUpBlocked;
+    public bool isLeftBlocked;
+    public bool isRightBlocked;
 
     private List<Sprite> playerInputList = new List<Sprite>();
 
@@ -65,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     PlayerMoveForward();
+                    delayDeleteIcon=false;
                 }
             }
             if (playerBackwardCount > 0 && moveForwardFinished)
@@ -72,12 +76,14 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     PlayerMoveBackward();
+                    delayDeleteIcon=false;
                 }
             }
 
             if (!isGrounded)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+                delayDeleteIcon=true;
             }
         }
 
@@ -111,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
             isEnterPressed = true;
             isMoveFinished = false;
             moveForwardFinished = false;
+            moveTimeCount=0;
         }
     }
 
@@ -125,12 +132,15 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(SetTrigger());
             playerBackwardStack.Push("Trigger");
             playerBackwardCount++;
+            delayDeleteIcon=false;
         }
         else if (input == "Right")
         {
             if (!isRightBlocked)
             {
                 transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
+                movingForward=true;
+                delayDeleteIcon=false;
             }
             playerBackwardStack.Push("Left");
             playerBackwardCount++;
@@ -140,9 +150,14 @@ public class PlayerMovement : MonoBehaviour
             if (!isUpBlocked)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
+                movingForward=true;
+                delayDeleteIcon=false;
             }
             playerBackwardStack.Push("Down");
             playerBackwardCount++;
+        }
+        if(isRightBlocked || isUpBlocked){
+            delayDeleteIcon=true;
         }
 
         if (playerInputCount == 0)
@@ -156,6 +171,8 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         moveForwardFinished = true;
         isEnterPressed = false;
+        movingForward=false;
+        movingBackward=false;
     }
 
     private void PlayerMoveBackward()
@@ -174,6 +191,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isLeftBlocked)
             {
                 transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
+                movingBackward=true;
             }
         }
         else if (input == "Down")
@@ -181,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isGrounded || !isDownBlocked)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+                movingBackward=true;
             }
         }
 
