@@ -14,12 +14,6 @@ public class RvsInputPresent : MonoBehaviour
         sp = Resources.LoadAll<Sprite>("move-Sheet");
         spR = gameObject.GetComponent<SpriteRenderer>();
         showed = false;
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         if(Input.GetKeyDown(KeyCode.D) && !showed){
             spR.sprite = sp[2];
             showed=true;
@@ -28,7 +22,12 @@ public class RvsInputPresent : MonoBehaviour
             spR.sprite = sp[3];
             showed=true;
         }
-        else if(Input.GetKeyDown(KeyCode.Space) && !showed){
-        }
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
