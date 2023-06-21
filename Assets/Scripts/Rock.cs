@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
+
+    private float moveTimeCount = 0;
+    private float moveTime = 0.5f;
     private float movePos = 1f;
 
     private Transform groundCheck;
@@ -24,7 +27,8 @@ public class Rock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        moveTimeCount = moveTime;
+
         isDownBlocked = false;
         isUpBlocked = false;
         isLeftBlocked = false;
@@ -44,6 +48,13 @@ public class Rock : MonoBehaviour
     void Update()
     {
         Debug.LogWarning("rock script runing");
+        moveTimeCount -= Time.deltaTime;
+        if (moveTimeCount < 0 && !isGrounded)
+        {
+            moveTimeCount = moveTime;
+            transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+
+        }
         CheckGround();
     }
 
@@ -59,7 +70,7 @@ public class Rock : MonoBehaviour
     }
     private void MoveRockToRight()
     {
-        if (!isLeftBlocked)
+        if (!isRightBlocked)
         {
             float rockNewX = transform.position.x + movePos;
             float rockNewY = transform.position.y;
