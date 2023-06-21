@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public InputList IList;
     private float movePos = 1f;
     private float moveTimeCount=0;
     private float moveTime = 0.5f;
@@ -12,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public bool moveForwardFinished;
     public bool movingForward;
     public bool movingBackward;
-    public bool delayDeleteIcon=false;
+    public bool doDelete;
 
     public Queue playerInputQueue = new Queue();
     private Stack playerBackwardStack = new Stack();
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         isUpBlocked = false;
         isLeftBlocked = false;
         isRightBlocked = false;
+        doDelete=false;
 
         groundCheck = transform.Find("GroundCheck");
         upCheck = transform.Find("UpCheck");
@@ -76,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     PlayerMoveForward();
-                    delayDeleteIcon=false;
                 }
             }
             if (playerBackwardCount > 0 && moveForwardFinished)
@@ -84,14 +85,12 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     PlayerMoveBackward();
-                    delayDeleteIcon=false;
                 }
             }
 
             if (!isGrounded)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                delayDeleteIcon=true;
             }
         }
 
@@ -137,13 +136,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (input == "Trigger")
         {
+            doDelete=true;
             StartCoroutine(SetTrigger());
             playerBackwardStack.Push("Trigger");
             playerBackwardCount++;
-            delayDeleteIcon=false;
         }
         else if (input == "Right")
         {
+            doDelete=true;
             if (!isRightBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
@@ -152,26 +152,19 @@ public class PlayerMovement : MonoBehaviour
                     rock.SendMessage("MoveRockToRight");
                 }
 
-                movingForward=true;
-                delayDeleteIcon=false;
-
             }
             playerBackwardStack.Push("Left");
             playerBackwardCount++;
         }
         else if (input == "Up")
         {
+            doDelete=true;
             if (!isUpBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
-                movingForward=true;
-                delayDeleteIcon=false;
             }
             playerBackwardStack.Push("Down");
             playerBackwardCount++;
-        }
-        if(isRightBlocked || isUpBlocked){
-            delayDeleteIcon=true;
         }
 
         if (playerInputCount == 0)
@@ -185,23 +178,24 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         moveForwardFinished = true;
         isEnterPressed = false;
-        movingForward=false;
-        movingBackward=false;
+        // movingForward=false;
+        // movingBackward=false;
     }
 
     private void PlayerMoveBackward()
     {
 
-        // Debug.Log("MoveBack");
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
         if (input == "Trigger")
         {
+            doDelete=true;
             StartCoroutine(SetTrigger());
         }
         else if (input == "Left")
         {
+            doDelete=true;
             if (!isLeftBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
@@ -216,17 +210,14 @@ public class PlayerMovement : MonoBehaviour
                     rock.GetComponent<Transform>().position = new Vector3(rockNewX, rockNewY, rockNewZ);
                     */
                 }
-
-                movingBackward=true;
-
             }
         }
         else if (input == "Down")
         {
+            doDelete=true;
             if (!isGrounded || !isDownBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                movingBackward=true;
             }
         }
 
@@ -287,7 +278,6 @@ public class PlayerMovement : MonoBehaviour
             
             if (collider.CompareTag("Rock"))
             {
-                Debug.LogWarning("left meet Rock");
                 rockOnLeft = true;
                 if (rock.GetComponent<Rock>().isLeftBlocked)
                 {
@@ -301,14 +291,12 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("not knowing in left");
                 rockOnLeft = false;
                 isLeftBlocked = true;
             }
         }
         else
         {
-            Debug.LogWarning("nothing in left");
             rockOnLeft = false;
             isLeftBlocked = false;
         }
@@ -316,11 +304,8 @@ public class PlayerMovement : MonoBehaviour
         if (Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer))
         {
             Collider2D collider = Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer);
-            Debug.LogWarning("have things in right");
-            Debug.LogWarning(collider);
             if (collider.CompareTag("Rock"))
             {
-                Debug.LogWarning("Right meet Rock");
                 rockOnRight = true;
                 if (rock.GetComponent<Rock>().isRightBlocked)
                 {
@@ -333,7 +318,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("not knowing in Right");
                 rockOnRight = false;
                 isRightBlocked = true;
             }
@@ -341,7 +325,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("nothing in Right");
             rockOnRight = false;
             isRightBlocked = false;
         }
