@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public bool rockOnLeft;
     public bool rockOnRight;
 
-    public int remainReturn;
+    public int remainReturn = 3;
 
     [SerializeField] private AudioSource reverseSoundEffect;
 
