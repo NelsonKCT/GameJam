@@ -15,10 +15,10 @@ public class Reset : MonoBehaviour
 
     private void Update()
     {
-        reset.onClick.AddListener(OnClick);
+        //reset.onClick.AddListener(OnClick);
     }
 
-    private void OnClick()
+    public void OnClick()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
