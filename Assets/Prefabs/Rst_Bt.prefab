@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 1573438871535537059}
   - component: {fileID: 1573438871535537058}
   - component: {fileID: 1573438871535537057}
+  - component: {fileID: 2793928431460590826}
   m_Layer: 5
   m_Name: BT
   m_TagString: Untagged
@@ -138,8 +139,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -58.333344, y: -63}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: 860, y: 392}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1573438871535537059
 CanvasRenderer:
@@ -223,6 +224,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2793928431460590826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573438871535537071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 613b45358f9e2734e845cb9e961a42e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: level1
 --- !u!1 &1573438872024451861
 GameObject:
   m_ObjectHideFlags: 0
