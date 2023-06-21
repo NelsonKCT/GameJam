@@ -20,6 +20,7 @@ public class Lever : MonoBehaviour
             Debug.Log("test");
             foreach (GameObject door in doorList)
             {
+                
                 door.SendMessage("OpenDoor");
             }
         }

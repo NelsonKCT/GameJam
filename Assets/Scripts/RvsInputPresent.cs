@@ -22,6 +22,10 @@ public class RvsInputPresent : MonoBehaviour
             spR.sprite = sp[3];
             showed=true;
         }
+        else if(Input.GetKeyDown(KeyCode.Space) && !showed){
+            spR.sprite = sp[4];
+            showed=true;
+        }
         
     }
 

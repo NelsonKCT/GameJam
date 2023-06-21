@@ -21,6 +21,10 @@ public class InputPresent : MonoBehaviour
             spR.sprite = sp[1];
             showed=true;
         }
+        else if(Input.GetKeyDown(KeyCode.Space) && !showed){
+            spR.sprite = sp[4];
+            showed=true;
+        }
         
     }
 

@@ -109,6 +109,48 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a8224e4b4cdf8a46811d0fc35206ae4
+      internalID: -1166550949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: move-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f82a62c967895243a7d018b6313a20a
+      internalID: 584278249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: move-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 128
         width: 128
         height: 128
@@ -119,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff92d5735ad07ee4594291d383cb5628
-      internalID: 933910647
+      spriteID: 4bddec464dd60e24b98d1b376913346e
+      internalID: -620106823
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move-Sheet_1
+      name: move-Sheet_3
       rect:
         serializedVersion: 2
         x: 128
@@ -140,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fa340448433a04478b662e2ec3d268d
-      internalID: 1510653130
+      spriteID: e2bc864e294b70e4598bb0c2d1bb9477
+      internalID: -1358296976
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move-Sheet_2
+      name: move-Sheet_4
       rect:
         serializedVersion: 2
         x: 0
@@ -161,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e850098d9c596d743b843ecc19734383
-      internalID: 1635196753
+      spriteID: 803d1d02192fedb4f8a80eac64149a5b
+      internalID: -2080491036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: move-Sheet_3
+      name: move-Sheet_5
       rect:
         serializedVersion: 2
         x: 128
@@ -182,8 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 178818bd8cac0ea47b1b47f47b9169d6
-      internalID: 1556034617
+      spriteID: fb0eee7c069f35547a641a02a42f7c44
+      internalID: 1184474522
       vertices: []
       indices: 
       edges: []
@@ -199,10 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      move-Sheet_0: 933910647
-      move-Sheet_2: 1635196753
-      move-Sheet_3: 1556034617
-      move-Sheet_1: 1510653130
+      move-Sheet_0: -1166550949
+      move-Sheet_2: -620106823
+      move-Sheet_4: -2080491036
+      move-Sheet_3: -1358296976
+      move-Sheet_5: 1184474522
+      move-Sheet_1: 584278249
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public InputList IList;
     private float movePos = 1f;
     private float moveTimeCount=0;
     private float moveTime = 0.5f;
@@ -12,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public bool moveForwardFinished;
     public bool movingForward;
     public bool movingBackward;
-    public bool delayDeleteIcon=false;
+    public bool doDelete;
 
     public Queue playerInputQueue = new Queue();
     private Stack playerBackwardStack = new Stack();
@@ -36,6 +37,12 @@ public class PlayerMovement : MonoBehaviour
 
     private List<Sprite> playerInputList = new List<Sprite>();
 
+    public GameObject rock;
+    public bool rockOnLeft;
+    public bool rockOnRight;
+
+    [SerializeField] private AudioSource reverseSoundEffect;
+
     void Start()
     {
         playerInputCount = 0;
@@ -47,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         isUpBlocked = false;
         isLeftBlocked = false;
         isRightBlocked = false;
+        doDelete=false;
 
         groundCheck = transform.Find("GroundCheck");
         upCheck = transform.Find("UpCheck");
@@ -54,10 +62,13 @@ public class PlayerMovement : MonoBehaviour
         rightCheck = transform.Find("RightCheck");
         trigger = transform.Find("Trigger");
         trigger.gameObject.SetActive(false);
+
+        rockOnLeft = false;
+        rockOnRight = true;
     }
     void Update()
     {
-        Debug.Log(playerInputQueue.Count);
+        // Debug.Log(playerInputQueue.Count);
 
         moveTimeCount -= Time.deltaTime;
         if (moveTimeCount < 0)
@@ -69,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     PlayerMoveForward();
-                    delayDeleteIcon=false;
                 }
             }
             if (playerBackwardCount > 0 && moveForwardFinished)
@@ -77,14 +87,12 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     PlayerMoveBackward();
-                    delayDeleteIcon=false;
                 }
             }
 
             if (!isGrounded)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                delayDeleteIcon=true;
             }
         }
 
@@ -130,35 +138,35 @@ public class PlayerMovement : MonoBehaviour
 
         if (input == "Trigger")
         {
+            doDelete=true;
             StartCoroutine(SetTrigger());
             playerBackwardStack.Push("Trigger");
             playerBackwardCount++;
-            delayDeleteIcon=false;
         }
         else if (input == "Right")
         {
+            doDelete=true;
             if (!isRightBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
-                movingForward=true;
-                delayDeleteIcon=false;
+                if (rockOnRight)
+                {
+                    rock.SendMessage("MoveRockToRight");
+                }
+
             }
             playerBackwardStack.Push("Left");
             playerBackwardCount++;
         }
         else if (input == "Up")
         {
+            doDelete=true;
             if (!isUpBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
-                movingForward=true;
-                delayDeleteIcon=false;
             }
             playerBackwardStack.Push("Down");
             playerBackwardCount++;
-        }
-        if(isRightBlocked || isUpBlocked){
-            delayDeleteIcon=true;
         }
 
         if (playerInputCount == 0)
@@ -169,38 +177,50 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator WaitForMoveFinish()
     {
+        reverseSoundEffect.Play();
         yield return new WaitForSeconds(1f);
         moveForwardFinished = true;
         isEnterPressed = false;
-        movingForward=false;
-        movingBackward=false;
+        // movingForward=false;
+        // movingBackward=false;
     }
 
     private void PlayerMoveBackward()
     {
 
-        Debug.Log("MoveBack");
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
         if (input == "Trigger")
         {
+            doDelete=true;
             StartCoroutine(SetTrigger());
         }
         else if (input == "Left")
         {
+            doDelete=true;
             if (!isLeftBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
-                movingBackward=true;
+
+                if (rockOnLeft)
+                {
+                    rock.SendMessage("MoveRockToLeft");
+                    /*
+                    float rockNewX = rock.GetComponent<Transform>().position.x - movePos;
+                    float rockNewY = rock.GetComponent<Transform>().position.y;
+                    float rockNewZ = rock.GetComponent<Transform>().position.z;
+                    rock.GetComponent<Transform>().position = new Vector3(rockNewX, rockNewY, rockNewZ);
+                    */
+                }
             }
         }
         else if (input == "Down")
         {
+            doDelete=true;
             if (!isGrounded || !isDownBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-                movingBackward=true;
             }
         }
 
@@ -257,19 +277,60 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics2D.OverlapBox(leftCheck.position, groundCheckSize, 0f, groundLayer))
         {
-            isLeftBlocked = true;
+            Collider2D collider = Physics2D.OverlapBox(leftCheck.position, groundCheckSize, 0f, groundLayer);
+            
+            if (collider.CompareTag("Rock"))
+            {
+                rockOnLeft = true;
+                rock = collider.gameObject;
+                if (rock.GetComponent<Rock>().isLeftBlocked)
+                {
+                    isLeftBlocked = true;
+                }
+                else
+                {
+                    isLeftBlocked = false;
+                }
+                isLeftBlocked = false;
+            }
+            else
+            {
+                
+                rockOnLeft = false;
+                isLeftBlocked = true;
+            }
         }
         else
         {
+            rockOnLeft = false;
             isLeftBlocked = false;
         }
 
         if (Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer))
         {
-            isRightBlocked = true;
+            Collider2D collider = Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer);
+            if (collider.CompareTag("Rock"))
+            {
+                rockOnRight = true;
+                rock = collider.gameObject;
+                if (rock.GetComponent<Rock>().isRightBlocked)
+                {
+                    isRightBlocked = true;
+                }
+                else
+                {
+                    isRightBlocked = false;
+                }
+            }
+            else
+            {
+                rockOnRight = false;
+                isRightBlocked = true;
+            }
         }
         else
         {
+            rockOnRight = false;
             isRightBlocked = false;
         }
     }
