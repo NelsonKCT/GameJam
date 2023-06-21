@@ -47,7 +47,7 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning("rock script runing");
+        Debug.LogWarning("rock script running");
         moveTimeCount -= Time.deltaTime;
         if (moveTimeCount < 0 && !isGrounded)
         {

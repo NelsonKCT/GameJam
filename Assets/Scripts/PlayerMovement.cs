@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     public bool rockOnLeft;
     public bool rockOnRight;
 
+    [SerializeField] private AudioSource reverseSoundEffect;
+
     void Start()
     {
         playerInputCount = 0;
@@ -182,6 +184,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator WaitForMoveFinish()
     {
+        reverseSoundEffect.Play();
         yield return new WaitForSeconds(1f);
         moveForwardFinished = true;
         isEnterPressed = false;
@@ -337,7 +340,6 @@ public class PlayerMovement : MonoBehaviour
                 rockOnRight = false;
                 isRightBlocked = true;
             }
-           
         }
         else
         {
