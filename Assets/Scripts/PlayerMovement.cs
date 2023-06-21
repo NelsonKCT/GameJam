@@ -247,6 +247,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 isDownBlocked = false;
             }
+            else if(collider.CompareTag("OneWayDoor") && canWalkThrough)
+            {
+                isDownBlocked = false;
+            }
             else
             {
                 isDownBlocked = true;
@@ -262,6 +266,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Collider2D collider = Physics2D.OverlapBox(upCheck.position, groundCheckSize, 0f, groundLayer);
             if (collider.CompareTag("Platform"))
+            {
+                isUpBlocked = false;
+            }
+            else if(collider.CompareTag("OneWayDoor") && canWalkThrough)
             {
                 isUpBlocked = false;
             }
@@ -293,6 +301,14 @@ public class PlayerMovement : MonoBehaviour
                 }
                 isLeftBlocked = false;
             }
+            else if (collider.CompareTag("Platform"))
+            {
+                isLeftBlocked = false;
+            }
+            else if(collider.CompareTag("OneWayDoor") && canWalkThrough)
+            {
+                isLeftBlocked = false;
+            }
             else
             {
 
@@ -322,6 +338,14 @@ public class PlayerMovement : MonoBehaviour
                     isRightBlocked = false;
                 }
             }
+            else if (collider.CompareTag("Platform"))
+            {
+                isRightBlocked = false;
+            }
+            else if(collider.CompareTag("OneWayDoor") && canWalkThrough)
+            {
+                isRightBlocked = false;
+            }
             else
             {
                 rockOnRight = false;
@@ -337,25 +361,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("OneWayDoor"))
+        if (other.CompareTag("DoorPos"))
         {
             StartCoroutine(OneWayDoor());
         }
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
     }
 
     IEnumerator OneWayDoor()
     {
         canWalkThrough = true;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
         canWalkThrough = false;
     }
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+        Gizmos.DrawWireCube(leftCheck.position, groundCheckSize);
     }
 }
