@@ -48,13 +48,6 @@ public class Rock : MonoBehaviour
     void Update()
     {
         Debug.LogWarning("rock script running");
-        moveTimeCount -= Time.deltaTime;
-        if (moveTimeCount < 0 && !isGrounded)
-        {
-            moveTimeCount = moveTime;
-            transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
-
-        }
         CheckGround();
     }
 

@@ -11,6 +11,8 @@ public class InputPresent : MonoBehaviour
     void Start()
     {
         sp = Resources.LoadAll<Sprite>("move-Sheet");
+        Debug.Log("Length");
+        Debug.Log(sp.Length);
         spR = gameObject.GetComponent<SpriteRenderer>();
         showed = false;
         if(Input.GetKeyDown(KeyCode.D) && !showed){
@@ -19,6 +21,10 @@ public class InputPresent : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.W) && !showed){
             spR.sprite = sp[1];
+            showed=true;
+        }
+        else if(Input.GetKeyDown(KeyCode.Space) && !showed){
+            spR.sprite = sp[4];
             showed=true;
         }
         
