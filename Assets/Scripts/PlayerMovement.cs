@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -50,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private AudioSource reverseSoundEffect;
 
+    public Text remainReturnText;
+
 
     void Start()
     {
@@ -73,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
 
         rockOnLeft = false;
         rockOnRight = true;
+
+        remainReturnText.text = "RETURN TIME: " + remainReturn.ToString();
     }
     void Update()
     {
@@ -135,10 +140,12 @@ public class PlayerMovement : MonoBehaviour
             if (remainReturn <= 0)
             {
                 Debug.LogWarning("No more backward");
+                remainReturnText.text = "RETURN TIME: GAMEOVER";
             }
             else
             {
                 remainReturn--;
+                remainReturnText.text = "RETURN TIME: " + remainReturn.ToString();
                 isEnterPressed = true;
                 isMoveFinished = false;
                 moveForwardFinished = false;
