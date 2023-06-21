@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
 {   
     private Transform ClosedDoor;
     private Transform OpenedDoor;
+    public bool willCloss = false;
     private void Start()
     {
         ClosedDoor = transform.Find("ClosedDoor");
@@ -18,5 +19,16 @@ public class Door : MonoBehaviour
         Debug.Log("OpenDoor");
         ClosedDoor.gameObject.SetActive(false);
         OpenedDoor.gameObject.SetActive(true);
+    }
+    public void CloseDoor()
+    {
+        if (willCloss)
+        {
+            Debug.Log("ClossDoor");
+            ClosedDoor.gameObject.SetActive(true);
+            OpenedDoor.gameObject.SetActive(false);
+
+        }
+        
     }
 }

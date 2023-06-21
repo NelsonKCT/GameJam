@@ -7,12 +7,13 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private string nextSeceneName;
     [SerializeField] private bool isLocked;
-
+    public bool willCloss = false;
     private void Update()
     {
         if(isLocked)
         {
             transform.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
         else
         {
@@ -27,6 +28,14 @@ public class Portal : MonoBehaviour
         {
             Debug.Log("test");
             isLocked = false;
+        }
+    }
+    public void CloseDoor()
+    {
+        if (!isLocked && willCloss)
+        {
+            Debug.Log("test");
+            isLocked = true;
         }
     }
 

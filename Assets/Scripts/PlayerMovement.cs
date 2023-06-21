@@ -287,8 +287,8 @@ public class PlayerMovement : MonoBehaviour
             
             if (collider.CompareTag("Rock"))
             {
-                Debug.LogWarning("left meet Rock");
                 rockOnLeft = true;
+                rock = collider.gameObject;
                 if (rock.GetComponent<Rock>().isLeftBlocked)
                 {
                     isLeftBlocked = true;
@@ -301,14 +301,13 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("not knowing in left");
+                
                 rockOnLeft = false;
                 isLeftBlocked = true;
             }
         }
         else
         {
-            Debug.LogWarning("nothing in left");
             rockOnLeft = false;
             isLeftBlocked = false;
         }
@@ -316,12 +315,10 @@ public class PlayerMovement : MonoBehaviour
         if (Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer))
         {
             Collider2D collider = Physics2D.OverlapBox(rightCheck.position, groundCheckSize, 0f, groundLayer);
-            Debug.LogWarning("have things in right");
-            Debug.LogWarning(collider);
             if (collider.CompareTag("Rock"))
             {
-                Debug.LogWarning("Right meet Rock");
                 rockOnRight = true;
+                rock = collider.gameObject;
                 if (rock.GetComponent<Rock>().isRightBlocked)
                 {
                     isRightBlocked = true;
@@ -333,7 +330,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("not knowing in Right");
                 rockOnRight = false;
                 isRightBlocked = true;
             }
@@ -341,7 +337,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("nothing in Right");
             rockOnRight = false;
             isRightBlocked = false;
         }
