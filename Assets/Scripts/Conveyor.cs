@@ -30,9 +30,17 @@ public class Conveyor : MonoBehaviour
             string input = (string)pM.playerInputQueue.Peek();
             if (pM.playerCurInput == input)
             {
-                
+
             }
             else
+            {
+                player.transform.position = movePos.position;
+            }
+        }
+        else if(pM.playerInputQueue.Count == 0 && pM.playerBackwardStack.Count !=0)
+        {
+            string input = (string)pM.playerBackwardStack.Peek();
+            if((pM.playerCurInput != input))
             {
                 player.transform.position = movePos.position;
             }
