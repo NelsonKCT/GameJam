@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public InputList IList;
     private float movePos = 1f;
-    private float moveTimeCount=0;
+    private float moveTimeCount = 0;
     private float moveTime = 0.5f;
     public bool isMoveFinished;
     public bool isEnterPressed;
@@ -41,9 +41,10 @@ public class PlayerMovement : MonoBehaviour
     public bool rockOnLeft;
     public bool rockOnRight;
 
-    public int remainReturn = 3;
+    public int remainReturn = 2;
 
     [SerializeField] private AudioSource reverseSoundEffect;
+
 
     void Start()
     {
@@ -56,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         isUpBlocked = false;
         isLeftBlocked = false;
         isRightBlocked = false;
-        doDelete=false;
+        doDelete = false;
 
         groundCheck = transform.Find("GroundCheck");
         upCheck = transform.Find("UpCheck");
@@ -125,9 +126,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return) && isMoveFinished)
         {
+
             if(remainReturn <= 0)
             {
-                Debug.LogWarning("No more");
+                Debug.LogWarning("No more backward");
             }
             else
             {
@@ -138,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
                 moveTimeCount = 0;
             }
             
+
         }
     }
 
@@ -149,14 +152,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (input == "Trigger")
         {
-            doDelete=true;
+            doDelete = true;
             StartCoroutine(SetTrigger());
             playerBackwardStack.Push("Trigger");
             playerBackwardCount++;
         }
         else if (input == "Right")
         {
-            doDelete=true;
+            doDelete = true;
             if (!isRightBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
@@ -171,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Up")
         {
-            doDelete=true;
+            doDelete = true;
             if (!isUpBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
@@ -204,12 +207,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (input == "Trigger")
         {
-            doDelete=true;
+            doDelete = true;
             StartCoroutine(SetTrigger());
         }
         else if (input == "Left")
         {
-            doDelete=true;
+            doDelete = true;
             if (!isLeftBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
@@ -228,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Down")
         {
-            doDelete=true;
+            doDelete = true;
             if (!isGrounded || !isDownBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
@@ -290,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
         if (Physics2D.OverlapBox(leftCheck.position, groundCheckSize, 0f, groundLayer))
         {
             Collider2D collider = Physics2D.OverlapBox(leftCheck.position, groundCheckSize, 0f, groundLayer);
-            
+
             if (collider.CompareTag("Rock"))
             {
                 rockOnLeft = true;
@@ -307,7 +310,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                
+
                 rockOnLeft = false;
                 isLeftBlocked = true;
             }
@@ -347,18 +350,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("OneWayDoor"))
         {
             StartCoroutine(OneWayDoor());
         }
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+    }
 
     IEnumerator OneWayDoor()
     {
         canWalkThrough = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.8f);
         canWalkThrough = false;
     }
 
