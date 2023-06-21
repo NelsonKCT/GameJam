@@ -20,6 +20,7 @@ public class Reset : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log("test");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
