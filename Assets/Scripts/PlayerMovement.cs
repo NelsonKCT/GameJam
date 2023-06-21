@@ -285,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator OneWayDoor()
     {
         canWalkThrough = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         canWalkThrough = false;
     }
 
