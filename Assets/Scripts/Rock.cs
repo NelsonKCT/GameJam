@@ -38,16 +38,20 @@ public class Rock : MonoBehaviour
         upCheck = transform.Find("UpCheck");
         leftCheck = transform.Find("LeftCheck");
         rightCheck = transform.Find("RightCheck");
-        /*
-        trigger = transform.Find("Trigger");
-        trigger.gameObject.SetActive(false);
-        */
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning("rock script running");
+        
+        moveTimeCount -= Time.deltaTime;
+        if (moveTimeCount < 0 && !isGrounded)
+        {
+            moveTimeCount = moveTime;
+            transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
+
+        }
+
         CheckGround();
     }
 

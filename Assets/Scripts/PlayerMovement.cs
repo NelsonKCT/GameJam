@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     public bool rockOnLeft;
     public bool rockOnRight;
 
+    [SerializeField] private AudioSource reverseSoundEffect;
+
     void Start()
     {
         playerInputCount = 0;
@@ -175,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator WaitForMoveFinish()
     {
+        reverseSoundEffect.Play();
         yield return new WaitForSeconds(1f);
         moveForwardFinished = true;
         isEnterPressed = false;
@@ -279,6 +282,7 @@ public class PlayerMovement : MonoBehaviour
             if (collider.CompareTag("Rock"))
             {
                 rockOnLeft = true;
+                rock = collider.gameObject;
                 if (rock.GetComponent<Rock>().isLeftBlocked)
                 {
                     isLeftBlocked = true;
@@ -291,6 +295,10 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+<<<<<<< HEAD
+=======
+                
+>>>>>>> e28c711eb58c8643b3af3caf8a5e063176d74949
                 rockOnLeft = false;
                 isLeftBlocked = true;
             }
@@ -307,6 +315,7 @@ public class PlayerMovement : MonoBehaviour
             if (collider.CompareTag("Rock"))
             {
                 rockOnRight = true;
+                rock = collider.gameObject;
                 if (rock.GetComponent<Rock>().isRightBlocked)
                 {
                     isRightBlocked = true;
@@ -321,7 +330,6 @@ public class PlayerMovement : MonoBehaviour
                 rockOnRight = false;
                 isRightBlocked = true;
             }
-           
         }
         else
         {
