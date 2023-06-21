@@ -299,10 +299,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2c6f0edde86fe439029d101f3d0bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IList: {fileID: 6193579619355899323, guid: 033420c1e1cd62744a92326fa24cb173, type: 3}
+  isMoveFinished: 0
+  isEnterPressed: 0
+  moveForwardFinished: 0
+  movingForward: 0
+  movingBackward: 0
+  playerCurInput: 
   groundCheckSize: {x: 0.25, y: 0.25}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  isGrounded: 0
+  isDownBlocked: 0
+  isUpBlocked: 0
+  isLeftBlocked: 0
+  isRightBlocked: 0
+  canWalkThrough: 0
+  rock: {fileID: 0}
+  rockOnLeft: 0
+  rockOnRight: 0
 --- !u!50 &679864042
 Rigidbody2D:
   serializedVersion: 4
