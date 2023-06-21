@@ -295,10 +295,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-<<<<<<< HEAD
-=======
                 
->>>>>>> e28c711eb58c8643b3af3caf8a5e063176d74949
                 rockOnLeft = false;
                 isLeftBlocked = true;
             }
