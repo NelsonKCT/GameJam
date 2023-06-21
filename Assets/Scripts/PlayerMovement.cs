@@ -150,12 +150,6 @@ public class PlayerMovement : MonoBehaviour
                 if (rockOnRight)
                 {
                     rock.SendMessage("MoveRockToRight");
-                    /*
-                    float rockNewX = rock.GetComponent<Transform>().position.x + movePos;
-                    float rockNewY = rock.GetComponent<Transform>().position.y;
-                    float rockNewZ = rock.GetComponent<Transform>().position.z;
-                    rock.GetComponent<Transform>().position = new Vector3(rockNewX, rockNewY, rockNewZ);
-                    */
                 }
 
                 movingForward=true;
@@ -295,6 +289,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.LogWarning("left meet Rock");
                 rockOnLeft = true;
+                if (rock.GetComponent<Rock>().isLeftBlocked)
+                {
+                    isLeftBlocked = true;
+                }
+                else
+                {
+                    isLeftBlocked = false;
+                }
                 isLeftBlocked = false;
             }
             else
@@ -320,7 +322,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.LogWarning("Right meet Rock");
                 rockOnRight = true;
-                isLeftBlocked = false;
+                if (rock.GetComponent<Rock>().isRightBlocked)
+                {
+                    isRightBlocked = true;
+                }
+                else
+                {
+                    isRightBlocked = false;
+                }
             }
             else
             {

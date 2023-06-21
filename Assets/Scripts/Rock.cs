@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Rock : MonoBehaviour
 {
+
+    private float moveTimeCount = 0;
+    private float moveTime = 0.5f;
     private float movePos = 1f;
 
     private Transform groundCheck;
@@ -24,7 +27,8 @@ public class Rock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        moveTimeCount = moveTime;
+
         isDownBlocked = false;
         isUpBlocked = false;
         isLeftBlocked = false;
@@ -59,7 +63,7 @@ public class Rock : MonoBehaviour
     }
     private void MoveRockToRight()
     {
-        if (!isLeftBlocked)
+        if (!isRightBlocked)
         {
             float rockNewX = transform.position.x + movePos;
             float rockNewY = transform.position.y;
