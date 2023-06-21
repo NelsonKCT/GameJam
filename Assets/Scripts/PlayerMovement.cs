@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if(remainReturn <= 0)
             {
-                Debug.LogWarning("No more");
+                Debug.LogWarning("No more backward");
             }
             else
             {
