@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isUpBlocked;
     public bool isLeftBlocked;
     public bool isRightBlocked;
+    public bool canWalkThrough;
 
     private List<Sprite> playerInputList = new List<Sprite>();
 
@@ -136,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Right")
         {
-            if (!isRightBlocked)
+            if (!isRightBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x + movePos, transform.position.y, transform.position.z);
                 movingForward=true;
@@ -147,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Up")
         {
-            if (!isUpBlocked)
+            if (!isUpBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + movePos, transform.position.z);
                 movingForward=true;
@@ -188,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Left")
         {
-            if (!isLeftBlocked)
+            if (!isLeftBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x - movePos, transform.position.y, transform.position.z);
                 movingBackward=true;
@@ -196,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (input == "Down")
         {
-            if (!isGrounded || !isDownBlocked)
+            if (!isGrounded || !isDownBlocked || canWalkThrough)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - movePos, transform.position.z);
                 movingBackward=true;
@@ -271,6 +272,21 @@ public class PlayerMovement : MonoBehaviour
         {
             isRightBlocked = false;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("OneWayDoor"))
+        {
+            StartCoroutine(OneWayDoor());
+        }
+    }
+
+    IEnumerator OneWayDoor()
+    {
+        canWalkThrough = true;
+        yield return new WaitForSeconds(0.5f);
+        canWalkThrough = false;
     }
 
     private void OnDrawGizmos()
