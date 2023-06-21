@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
     public bool rockOnLeft;
     public bool rockOnRight;
 
+    [SerializeField] private AudioSource reverseSoundEffect;
+
     void Start()
     {
         playerInputCount = 0;
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(playerInputQueue.Count);
+        // Debug.Log(playerInputQueue.Count);
 
         moveTimeCount -= Time.deltaTime;
         if (moveTimeCount < 0)
@@ -182,6 +184,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator WaitForMoveFinish()
     {
+        reverseSoundEffect.Play();
         yield return new WaitForSeconds(1f);
         moveForwardFinished = true;
         isEnterPressed = false;
@@ -192,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerMoveBackward()
     {
 
-        Debug.Log("MoveBack");
+        // Debug.Log("MoveBack");
         string input = (string)playerBackwardStack.Pop();
         playerBackwardCount--;
 
@@ -333,7 +336,6 @@ public class PlayerMovement : MonoBehaviour
                 rockOnRight = false;
                 isRightBlocked = true;
             }
-           
         }
         else
         {
