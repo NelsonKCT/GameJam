@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7243416770460238322}
   m_Layer: 7
   m_Name: OneWayDoor
-  m_TagString: Untagged
+  m_TagString: OneWayDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,9 +122,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7842862109738029488}
   - component: {fileID: 1675472796}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DoorPos
-  m_TagString: OneWayDoor
+  m_TagString: DoorPos
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

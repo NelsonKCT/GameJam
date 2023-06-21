@@ -9,6 +9,7 @@ TagManager:
   - Conveyor
   - OneWayDoor
   - Rock
+  - DoorPos
   layers:
   - Default
   - TransparentFX
